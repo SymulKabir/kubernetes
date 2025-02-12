@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mongodb
+  namespace: default
+spec:
+  restartPolicy: Never
+  volumes:
+  - name: mongodb-storage
+    hostPath:
+      path: /Users/pranta/temp
+  containers:
+  - name: pv-recycler
+    image: mongo
+    volumeMounts:
+    - name: mongodb-storage
+      mountPath: /var/pranta
