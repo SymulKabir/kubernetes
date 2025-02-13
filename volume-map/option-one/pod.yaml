@@ -8,10 +8,10 @@ spec:
   volumes:
   - name: mongodb-storage
     hostPath:
-      path: /Users/pranta/temp
+      path: /bin
   containers:
   - name: pv-recycler
     image: mongo
     volumeMounts:
     - name: mongodb-storage
-      mountPath: /var/pranta
+      mountPath: /var/symul
