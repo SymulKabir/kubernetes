@@ -15,8 +15,11 @@ spec:
       containers:
         - name: photo-gallery-app
           image: saimonpranta/photo-gallery
+          env:
+            - name: DB_URL
+              value: mongodb://service-mongodb:27017
           volumeMounts:
-            - mountPath: '/app/Storage/Photo Gallery'
+            - mountPath: '/Storage/Photo Gallery'
               name: photo-gallery-vol
       volumes:
         - name: photo-gallery-vol
