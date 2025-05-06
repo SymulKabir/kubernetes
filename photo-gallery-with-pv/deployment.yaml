@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: photo-gallery-app
-          image: photo-gallery:latest
+          image: saimonpranta/photo-gallery
           volumeMounts:
             - mountPath: '/app/Storage/Photo Gallery'
               name: photo-gallery-vol
