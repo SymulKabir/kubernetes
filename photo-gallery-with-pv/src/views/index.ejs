@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Image Gallery</title>
+</head>
+<body>
+  <h1>Upload Image</h1>
+  <form action="/upload" method="POST" enctype="multipart/form-data">
+    <input type="file" accept="image/*" name="image" required />
+    <button type="submit">Upload</button>
+  </form>
+
+  <h2>Image Gallery</h2>
+  <div>
+    <% images.forEach(image => { %>
+      <img src="/media/<%= image.filename %>" width="200" />
+    <% }) %>
+  </div>
+</body>
+</html>

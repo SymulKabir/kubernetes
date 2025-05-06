@@ -16,12 +16,12 @@ spec:
         - name: mongo-app
           image: mongo:latest
           volumeMounts:
-            - mountPath: /var/symul
+            - mountPath: /data/db
               name: mongo-vol
       volumes:
         - name: mongo-vol
           persistentVolumeClaim:
-            claimName: host-pvc
+            claimName: mongo-pvc
     
 ---
 

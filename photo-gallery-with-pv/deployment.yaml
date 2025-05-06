@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: photo-gallery-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: photo-gallery-app
+  template:
+    metadata:
+      labels:
+        app: photo-gallery-app
+    spec:
+      containers:
+        - name: photo-gallery-app
+          image: photo-gallery:latest
+          volumeMounts:
+            - mountPath: '/app/Storage/Photo Gallery'
+              name: photo-gallery-vol
+      volumes:
+        - name: photo-gallery-vol
+          persistentVolumeClaim:
+            claimName: photo-gallery-pvc
+    
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-photo-gallery
+spec:
+  selector:
+    app: photo-gallery-app
+  ports:
+    - name: tcp
+      port: 3000
+      targetPort: 3000
