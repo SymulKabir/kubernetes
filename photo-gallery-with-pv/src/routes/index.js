@@ -4,7 +4,7 @@ const path = require('path')
 const fs = require('fs')
 const Image = require('../DB/models/Image')
 
-const galleryFolderLocation = process.env.GALLERY_FOLDER_LOCATION || '../../../../Storage/Photo Gallery'
+const galleryFolderLocation = process.env.GALLERY_FOLDER_LOCATION || '../../../../storage/photo-gallery'
 const photoGalleryRootPath = path.join(__dirname, galleryFolderLocation)
 console.log("photoGalleryRootPath -->>", photoGalleryRootPath)
 const storage = multer.diskStorage({

@@ -19,7 +19,7 @@ spec:
             - name: DB_URL
               value: mongodb://service-mongodb:27017
           volumeMounts:
-            - mountPath: '/Storage/Photo Gallery'
+            - mountPath: /storage/photo-gallery
               name: photo-gallery-vol
       volumes:
         - name: photo-gallery-vol
