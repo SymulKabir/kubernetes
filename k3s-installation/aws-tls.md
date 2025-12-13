@@ -56,6 +56,17 @@ hostNetwork: true
 dnsPolicy: ClusterFirstWithHostNet
 ```
 
+#### (Optional) Stop or Scale Down ingress-nginx Deployment
+
+```bash
+kubectl scale deployment ingress-nginx-controller -n ingress-nginx --replicas=0
+```
+
+#### (Optonal) Stop or Scale Up ingress-nginx Deployment
+```bash
+kubectl scale deployment ingress-nginx-controller -n ingress-nginx --replicas=1
+```
+
 #### Deploy Ingress Resource
 ```bash
 kubectl apply -f ingress.yaml
