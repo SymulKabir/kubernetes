@@ -1,18 +1,39 @@
-# Install App's Deployment and Services
-# Next Step (Install Nginx-ingress-controller)
- kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.9.6/deploy/static/provider/cloud/deploy.yaml
-# Verify Deployment
-kubectl get pods -n ingress-nginx
-# Verify Service
-kubectl get svc -n ingress-nginx
-# Edit ingress-nginx service type LoadBalancer to NodePort
-kubectl edit svc ingress-nginx-controller -n ingress-nginx
+# App Deployment and Ingress Setup on Kubernetes
+This guide walks you through installing your app, setting up Nginx Ingress Controller, enabling HTTPS with Cert-Manager, and deploying your ingress resources.
 
--> From
- ==>type: LoadBalancer
- ->To
- ==> type: NodePort
-# Next Step 
+---
+#### Install Nginx Ingress Controller
+```bash
+ kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.9.6/deploy/static/provider/cloud/deploy.yaml
+```
+#### Verify Deployment
+```bash
+kubectl get pods -n ingress-nginx
+```
+
+#### Verify Service
+```bash
+kubectl get svc -n ingress-nginx
+```
+#### Edit ingress-nginx Change the `ingress-nginx-controller` service type from `LoadBalancer` to `NodePort`:
+```bash
+kubectl edit svc ingress-nginx-controller -n ingress-nginx
+```
+Modify:
+
+```yaml
+type: LoadBalancer
+```
+
+To:
+
+```yaml
+type: NodePort
+```
+ 
+### Update Deployment for Host Networking
+#### Option 1: Using `kubectl patch`
+```bash
 kubectl patch deployment ingress-nginx-controller \
   -n ingress-nginx \
   --type=json \
@@ -22,32 +43,48 @@ kubectl patch deployment ingress-nginx-controller \
   -n ingress-nginx \
   --type=json \
   -p='[{"op":"replace","path":"/spec/template/spec/dnsPolicy","value":"ClusterFirstWithHostNet"}]'
-
-====>> 'OR' Do it by Edit the Deployment Manually
-
+```
+#### Option 2: Edit Deployment Manually
+```bash
 kubectl edit deployment ingress-nginx-controller -n ingress-nginx
+```
 
--> Then add this line under "spec.template.spec":
- hostNetwork: true
+Add under `spec.template.spec`:
 
--> Then find the "spec.template.spec" section and change or add this line:
- dnsPolicy: ClusterFirstWithHostNet
+```yaml
+hostNetwork: true
+dnsPolicy: ClusterFirstWithHostNet
+```
 
-  # Next Step (Deploy ingress.yaml file)
-  kubectl apply -f ingress.yaml
-  -> your domain should access able from any web browser with http protocol  
-
-  # Next Step (Install Cert-manager for https protocol)
-  
-  kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.14.4/cert-manager.yaml
-
-
-# Next Step (Verify installation)
-kubectl get pods --namespace cert-manager
-
-# Next Step (Apply Cluster issuer)
-kubectl get apply -f cluster-issuer.yaml
-
-# Next Step (Update ingress.yaml file re-apply it )
--> Update ingress.yaml file with tls configuration
+#### Deploy Ingress Resource
+```bash
 kubectl apply -f ingress.yaml
+```
+After this, your domain should be accessible via `HTTP` in any web browser.
+
+#### Install Cert-Manager (for HTTPS)
+```bash
+kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.14.4/cert-manager.yaml
+
+```
+
+#### Verify Cert-Manager Installation
+
+```bash
+kubectl get pods --namespace cert-manager
+```
+
+#### Apply ClusterIssuer
+
+```bash
+kubectl apply -f cluster-issuer.yaml
+```
+
+#### Update Ingress for TLS
+- Update `ingress.yaml` with TLS configuration.
+- Re-apply the updated ingress file:
+
+```bash
+kubectl apply -f ingress.yaml
+```
+Your domain should now be accessible via HTTPS.
