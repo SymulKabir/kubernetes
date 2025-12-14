@@ -153,7 +153,12 @@ Apply ClusterIssuer Resource
 ```bash
 kubectl apply -f cluster-issuer.yaml
 ```
-
+#### Verify ClusterIssuer
+```bash
+root@micple:/var/k8s/web# kubectl get clusterissuer
+NAME               READY   AGE
+letsencrypt-prod   True    6s
+```
 #### Update Ingress for TLS
 - Update `ingress.yaml` with TLS configuration.
 - Re-apply the updated ingress file:
