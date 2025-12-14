@@ -196,5 +196,24 @@ kubectl apply -f ingress.yaml
 Your domain should now be accessible via `HTTPS`
 
 #### Verify certificate & tls
+```bash
+kubectl get certificate
+```
+Result:
+```bash
+root@micple:/var/k8s/web# kubectl get certificate
+NAME             READY   SECRET           AGE
+micple-com-tls   True    micple-com-tls   13m
+```
+
+```bash
+kubectl get secret micple-com-tls
+```
+Result:
+```bash
+root@micple:/var/k8s/web# kubectl get secret micple-com-tls
+NAME             TYPE                DATA   AGE
+micple-com-tls   kubernetes.io/tls   2      13m
+```
 
 
