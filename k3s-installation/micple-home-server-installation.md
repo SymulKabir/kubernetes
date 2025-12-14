@@ -11,7 +11,7 @@ Kernel Version: 6.8.x
 
 CPU: 16 vCPU 
 
-RAM: 62Gi GB
+RAM: 62 GB
 
 #### Install Nginx Ingress Controller
 ```bash
