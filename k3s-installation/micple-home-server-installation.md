@@ -4,9 +4,13 @@ This guide walks you through installing your app, setting up Nginx Ingress Contr
 ---
 #### Server Specifications & Environment Details
 Server Type: VPS / Bare Metal
+
 Operating System: Ubuntu 24.04.3 LTS (Noble Numbat)
+
 Kernel Version: 6.8.x
+
 CPU: 16 vCPU 
+
 RAM: 62Gi GB
 
 #### Install Nginx Ingress Controller
