@@ -160,9 +160,36 @@ NAME               READY   AGE
 letsencrypt-prod   True    6s
 ```
 #### Update Ingress for TLS
-- Update `ingress.yaml` with TLS configuration.
-- Re-apply the updated ingress file:
 
+Update `ingress.yaml` with TLS configuration.
+```bash
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: micple-ingress
+  namespace: default
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - micple.com
+    secretName: micple-com-tls
+  rules:
+  - host: micple.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: micple-service
+            port:
+              number: 80
+```
+Re-apply the updated ingress file:
 ```bash
 kubectl apply -f ingress.yaml
 ```
