@@ -17,7 +17,7 @@ ingress-nginx-admission-create-sgdnj        0/1     Completed   0          63s
 ingress-nginx-admission-patch-tcsx7         0/1     Completed   0          63s
 ingress-nginx-controller-746445475c-q89x8   0/1     Running     0          63s
 ```
-#### Step 2: Verify Service
+#### Step 3: Verify Service
 ```bash
 kubectl get svc -n ingress-nginx
 ```
