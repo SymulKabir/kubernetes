@@ -67,16 +67,58 @@ kubectl scale deployment ingress-nginx-controller -n ingress-nginx --replicas=0
 kubectl scale deployment ingress-nginx-controller -n ingress-nginx --replicas=1
 ```
 
-#### Deploy Ingress Resource
+#### Create Ingress Resource file
+```bash
+nano ingress.yaml
+```
+Paste the following configuration into `ingress.yaml`:
+
+```bash
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: micple-ingress
+  namespace: default
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: micple.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: micple-service
+            port:
+              number: 80
+```
+
+#### Apply the Ingress Resource
+Run the following command to apply the Ingress configuration:
 ```bash
 kubectl apply -f ingress.yaml
 ```
 After this, your domain should be accessible via `HTTP` in any web browser.
 
+#### Verify Ingress
+Check if the Ingress is created successfully:
+```bash
+kubectl get ingress
+```
+
+You will get like this output:
+```bash
+root@micple:/var/k8s/web# kubectl get ingress
+NAME               CLASS   HOSTS        ADDRESS   PORTS   AGE
+micple-ingress     nginx   micple.com             80      15h
+```
+
 #### Install Cert-Manager (for HTTPS)
 ```bash
 kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.14.4/cert-manager.yaml
-
 ```
 
 #### Verify Cert-Manager Installation
@@ -86,7 +128,28 @@ kubectl get pods --namespace cert-manager
 ```
 
 #### Apply ClusterIssuer
-
+Create `cluster-issuer.yaml` file:
+```bash
+nano cluster-issuer.yaml
+```
+Paste the following configuration:
+```text
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-prod
+spec:
+  acme:
+    email: saimonpranta@gmail.com
+    server: https://acme-v02.api.letsencrypt.org/directory
+    privateKeySecretRef:
+      name: letsencrypt-prod
+    solvers:
+    - http01:
+        ingress:
+          class: nginx
+```
+Apply ClusterIssuer Resource
 ```bash
 kubectl apply -f cluster-issuer.yaml
 ```
