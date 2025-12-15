@@ -13,6 +13,10 @@ CPU: 16 vCPU
 
 RAM: 62 GB
 
+#### Install K3s Without Ingress and LoadBalancer
+```bash
+curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--disable traefik --disable servicelb" sh -
+```
 #### Install Nginx Ingress Controller
 ```bash
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.9.6/deploy/static/provider/cloud/deploy.yaml
