@@ -34,11 +34,11 @@ On Server 1 firewall/router:
 
 Quick test from Server 2:
 ```bash
-nc -zv 192.168.68.10 6443
+nc -zv 192.168.68.68 6443
 ```
 ### Install k3s Agent on Server 2 (k3s-worker-1)
 
-#### Change hostname on WORKER (192.168.68.74)
+#### Change hostname on WORKER (192.168.68.69)
 ```bash
 hostnamectl set-hostname k3s-worker-1
 reboot
