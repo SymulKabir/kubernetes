@@ -1,0 +1,138 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: web-frontend-ingress
+  namespace: default
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - micple.com
+    - profile.micple.com
+    - mmail.micple.com
+    - balance.micple.com
+    - store.micple.com
+    - campaign.micple.com
+    - shortener.micple.com
+    - locker.micple.com
+    - investor.micple.com
+    - ads.micple.com
+    - donations.micple.com
+    secretName: web-frontend-tls
+
+  rules:
+  - host: micple.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: web-home-service
+            port:
+              number: 80
+
+  - host: profile.micple.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: web-timeline-service
+            port:
+              number: 80
+
+  - host: mmail.micple.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: web-mail-service
+            port:
+              number: 80
+  - host: balance.micple.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: web-wallet-service
+            port:
+              number: 80
+  - host: store.micple.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: web-store-service
+            port:
+              number: 80
+  - host: campaign.micple.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: web-campaign-service
+            port:
+              number: 80
+  - host: shortener.micple.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: web-shortener-service
+            port:
+              number: 80
+  - host: locker.micple.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: web-locker-service
+            port:
+              number: 80
+  - host: investor.micple.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: web-donations-service
+            port:
+              number: 80
+  - host: ads.micple.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: web-ads-service
+            port:
+              number: 80
+  - host: donations.micple.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: web-donations-service
+            port:
+              number: 80
+   

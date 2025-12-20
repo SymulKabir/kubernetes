@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: panel-backend-ingress
+  namespace: default
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - plmqazoknwsxijbedcuhvrfygt.backend.micple.com
+    secretName: panel-backend-tls
+  rules:
+  - host: plmqazoknwsxijbedcuhvrfygt.backend.micple.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: panel-backend-service
+            port:
+              number: 80

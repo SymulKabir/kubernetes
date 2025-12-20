@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-shortener
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web-shortener
+  template:
+    metadata:
+      labels:
+        app: web-shortener
+    spec:
+      containers:
+      - name: web-shortener
+        image: saimonpranta/12-shortener
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3016
+
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: web-shortener-service
+spec:
+  selector:
+    app: web-shortener
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3016
+  type: ClusterIP
+
+

@@ -1,0 +1,63 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: web-backend-ingress
+  namespace: default
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - backend.www.micple.com
+    - afflat3d4.com
+    - afflat3d5.com
+    - backend.cloud.micple.com
+    secretName: web-backend-tls
+
+  rules:
+  - host: backend.www.micple.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: web-backend-www-service
+            port:
+              number: 80
+
+  - host: afflat3d4.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: web-backend-redirection-service
+            port:
+              number: 80
+
+  - host: afflat3d5.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: web-backend-redirection-service
+            port:
+              number: 80
+
+  - host: backend.cloud.micple.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: cloud-service
+            port:
+              number: 80
+
+

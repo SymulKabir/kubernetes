@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: panel-acptd
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: panel-acptd
+  template:
+    metadata:
+      labels:
+        app: panel-acptd
+    spec:
+      containers:
+      - name: panel-acptd
+        image: saimonpranta/panel-2-acptd:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3110
+      nodeSelector:
+        kubernetes.io/hostname: k3s-worker-1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: panel-acptd-service
+spec:
+  selector:
+    app: panel-acptd
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3110
+  type: ClusterIP

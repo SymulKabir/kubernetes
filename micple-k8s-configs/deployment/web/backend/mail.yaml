@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-backend-mail
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web-backend-mail
+  template:
+    metadata:
+      labels:
+        app: web-backend-mail
+    spec:
+      hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
+      containers:
+        - name: web-backend-mail
+          image: saimonpranta/mail:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 25
+            - containerPort: 26

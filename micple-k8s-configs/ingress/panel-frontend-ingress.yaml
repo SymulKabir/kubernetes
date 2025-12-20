@@ -1,0 +1,57 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: panel-frontend-ingress
+  namespace: default
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - plmqazoknwsxijbedcuhvrfygt.micple.com
+    - plmqazoknwsxijbedcuhvrfygt.actp.micple.com
+    - plmqazoknwsxijbedcuhvrfygt.campaign.micple.com
+    - plmqazoknwsxijbedcuhvrfygt.user.micple.com
+    secretName: panel-frontend-tls
+  rules:
+  - host: plmqazoknwsxijbedcuhvrfygt.micple.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: panel-home-service
+            port:
+              number: 80
+  - host: plmqazoknwsxijbedcuhvrfygt.actp.micple.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: panel-acptd-service
+            port:
+              number: 80
+  - host: plmqazoknwsxijbedcuhvrfygt.campaign.micple.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: panel-campaign-service
+            port:
+              number: 80
+  - host: plmqazoknwsxijbedcuhvrfygt.user.micple.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: panel-user-service
+            port:
+              number: 80

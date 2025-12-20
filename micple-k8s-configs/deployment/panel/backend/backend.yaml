@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: panel-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: panel-backend
+  template:
+    metadata:
+      labels:
+        app: panel-backend
+    spec:
+      containers:
+        - name: web-backend-www
+          image: saimonpranta/backend:latest
+          imagePullPolicy: Always
+          env:
+            - name: DATABASE_URI
+              value: "mongodb://mongodb-service:27017"
+          ports:
+            - containerPort: 2100
+          volumeMounts:
+            - mountPath: /var/micple.com/default.imp
+              name: panel-backend-vol
+      volumes:
+        - name: panel-backend-vol
+          persistentVolumeClaim:
+            claimName: default-pvc
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: panel-backend-service
+spec:
+  selector:
+    app: panel-backend
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 2100
+  type: ClusterIP

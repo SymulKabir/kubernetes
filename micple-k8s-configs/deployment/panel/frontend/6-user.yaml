@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: panel-user
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: panel-user
+  template:
+    metadata:
+      labels:
+        app: panel-user
+    spec:
+      containers:
+      - name: panel-user
+        image: saimonpranta/panel-6-user:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3104
+      nodeSelector:
+        kubernetes.io/hostname: k3s-worker-1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: panel-user-service
+spec:
+  selector:
+    app: panel-user
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3104
+  type: ClusterIP

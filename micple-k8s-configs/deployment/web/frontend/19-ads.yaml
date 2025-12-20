@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-ads
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web-ads
+  template:
+    metadata:
+      labels:
+        app: web-ads
+    spec:
+      containers:
+      - name: web-ads
+        image: saimonpranta/19-ads
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3019
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: web-ads-service
+spec:
+  selector:
+    app: web-ads
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3019
+  type: ClusterIP
