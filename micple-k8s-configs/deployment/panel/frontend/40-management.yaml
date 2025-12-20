@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: panel-management
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: panel-management
+  template:
+    metadata:
+      labels:
+        app: panel-management
+    spec:
+      containers:
+      - name: panel-management
+        image: saimonpranta/40-management:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3109
+      nodeSelector:
+        kubernetes.io/hostname: k3s-worker-1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: panel-management-service
+spec:
+  selector:
+    app: panel-management
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3109
+  type: ClusterIP

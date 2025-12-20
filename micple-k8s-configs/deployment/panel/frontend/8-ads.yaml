@@ -1,33 +1,35 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: panel-home
+  name: panel-ads
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: panel-home
+      app: panel-ads
   template:
     metadata:
       labels:
-        app: panel-home
+        app: panel-ads
     spec:
       containers:
-      - name: panel-home
-        image: saimonpranta/panel-0-home:latest
+      - name: panel-ads
+        image: saimonpranta/8-ads:latest
         imagePullPolicy: Always
         ports:
-        - containerPort: 3100 
+        - containerPort: 3105
+      nodeSelector:
+        kubernetes.io/hostname: k3s-worker-1
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: panel-home-service
+  name: panel-ads-service
 spec:
   selector:
-    app: panel-home
+    app: panel-ads
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 3100
+      targetPort: 3105
   type: ClusterIP

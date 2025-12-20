@@ -1,33 +1,35 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: panel-home
+  name: panel-locker
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: panel-home
+      app: panel-locker
   template:
     metadata:
       labels:
-        app: panel-home
+        app: panel-locker
     spec:
       containers:
-      - name: panel-home
-        image: saimonpranta/panel-0-home:latest
+      - name: panel-locker
+        image: saimonpranta/34-locker:latest
         imagePullPolicy: Always
         ports:
-        - containerPort: 3100 
+        - containerPort: 3134
+      nodeSelector:
+        kubernetes.io/hostname: k3s-worker-1
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: panel-home-service
+  name: panel-locker-service
 spec:
   selector:
-    app: panel-home
+    app: panel-locker
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 3100
+      targetPort: 3134
   type: ClusterIP

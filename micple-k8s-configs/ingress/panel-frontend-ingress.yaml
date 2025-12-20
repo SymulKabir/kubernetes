@@ -13,6 +13,21 @@ spec:
     - plmqazoknwsxijbedcuhvrfygt.actp.micple.com
     - plmqazoknwsxijbedcuhvrfygt.campaign.micple.com
     - plmqazoknwsxijbedcuhvrfygt.user.micple.com
+    - plmqazoknwsxijbedcuhvrfygt.management.micple.com
+    - plmqazoknwsxijbedcuhvrfygt.ads.micple.com
+    - plmqazoknwsxijbedcuhvrfygt.rates.micple.com
+    - plmqazoknwsxijbedcuhvrfygt.balance.micple.com
+    - plmqazoknwsxijbedcuhvrfygt.store.micple.com
+    - plmqazoknwsxijbedcuhvrfygt.donations.micple.com
+    - plmqazoknwsxijbedcuhvrfygt.notice.micple.com
+    - plmqazoknwsxijbedcuhvrfygt.job.micple.com
+    - plmqazoknwsxijbedcuhvrfygt.watch.micple.com
+    - plmqazoknwsxijbedcuhvrfygt.locker.micple.com
+    - plmqazoknwsxijbedcuhvrfygt.futures.micple.com
+    - plmqazoknwsxijbedcuhvrfygt.shortener.micple.com
+    - plmqazoknwsxijbedcuhvrfygt.assistants.micple.com
+    - plmqazoknwsxijbedcuhvrfygt.investment.micple.com
+    - plmqazoknwsxijbedcuhvrfygt.labratories.micple.com
     secretName: panel-frontend-tls
   rules:
   - host: plmqazoknwsxijbedcuhvrfygt.micple.com
@@ -53,5 +68,155 @@ spec:
         backend:
           service:
             name: panel-user-service
+            port:
+              number: 80
+  - host: plmqazoknwsxijbedcuhvrfygt.management.micple.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: panel-management-service
+            port:
+              number: 80
+  - host: plmqazoknwsxijbedcuhvrfygt.ads.micple.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: panel-ads-service
+            port:
+              number: 80
+  - host: plmqazoknwsxijbedcuhvrfygt.rates.micple.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: panel-rates-service
+            port:
+              number: 80
+  - host: plmqazoknwsxijbedcuhvrfygt.balance.micple.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: panel-balance-service
+            port:
+              number: 80
+  - host: plmqazoknwsxijbedcuhvrfygt.store.micple.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: panel-store-service
+            port:
+              number: 80
+  - host: plmqazoknwsxijbedcuhvrfygt.donations.micple.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: panel-donations-service
+            port:
+              number: 80
+  - host: plmqazoknwsxijbedcuhvrfygt.notice.micple.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: panel-notice-service
+            port:
+              number: 80
+  - host: plmqazoknwsxijbedcuhvrfygt.job.micple.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: panel-jobs-service
+            port:
+              number: 80
+  - host: plmqazoknwsxijbedcuhvrfygt.watch.micple.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: panel-watch-service
+            port:
+              number: 80
+  - host: plmqazoknwsxijbedcuhvrfygt.locker.micple.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: panel-locker-service
+            port:
+              number: 80
+  - host: plmqazoknwsxijbedcuhvrfygt.futures.micple.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: panel-futures-service
+            port:
+              number: 80
+  - host: plmqazoknwsxijbedcuhvrfygt.shortener.micple.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: panel-shortener-service
+            port:
+              number: 80
+  - host: plmqazoknwsxijbedcuhvrfygt.assistants.micple.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: panel-assistant-service
+            port:
+              number: 80
+  - host: plmqazoknwsxijbedcuhvrfygt.investment.micple.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: panel-investments-service
+            port:
+              number: 80
+  - host: plmqazoknwsxijbedcuhvrfygt.labratories.micple.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: panel-laboratories-service
             port:
               number: 80

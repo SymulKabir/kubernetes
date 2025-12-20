@@ -17,9 +17,7 @@ spec:
         image: saimonpranta/panel-32-campaign:latest
         imagePullPolicy: Always
         ports:
-        - containerPort: 3113
-      nodeSelector:
-        kubernetes.io/hostname: k3s-worker-1
+        - containerPort: 3113 
 ---
 apiVersion: v1
 kind: Service

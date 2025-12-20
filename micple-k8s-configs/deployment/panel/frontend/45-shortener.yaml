@@ -1,33 +1,33 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: panel-home
+  name: panel-shortener
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: panel-home
+      app: panel-shortener
   template:
     metadata:
       labels:
-        app: panel-home
+        app: panel-shortener
     spec:
       containers:
-      - name: panel-home
-        image: saimonpranta/panel-0-home:latest
+      - name: panel-shortener
+        image: saimonpranta/45-shortener:latest
         imagePullPolicy: Always
         ports:
-        - containerPort: 3100 
+        - containerPort: 3145 
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: panel-home-service
+  name: panel-shortener-service
 spec:
   selector:
-    app: panel-home
+    app: panel-shortener
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 3100
+      targetPort: 3145
   type: ClusterIP

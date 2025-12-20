@@ -1,33 +1,33 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: panel-home
+  name: panel-laboratories
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: panel-home
+      app: panel-laboratories
   template:
     metadata:
       labels:
-        app: panel-home
+        app: panel-laboratories
     spec:
       containers:
-      - name: panel-home
-        image: saimonpranta/panel-0-home:latest
+      - name: panel-laboratories
+        image: saimonpranta/46-laboratories:latest
         imagePullPolicy: Always
         ports:
-        - containerPort: 3100 
+        - containerPort: 3146 
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: panel-home-service
+  name: panel-laboratories-service
 spec:
   selector:
-    app: panel-home
+    app: panel-laboratories
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 3100
+      targetPort: 3146
   type: ClusterIP
