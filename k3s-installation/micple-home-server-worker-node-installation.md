@@ -55,12 +55,11 @@ sudo rm -rf /etc/rancher /var/lib/rancher
 ```
 
 #### Install k3s Agent on Server 2 (k3s-worker-1)
-Here `192.168.68.68` this is master nod's ip and `192.168.68.69` is worker nod's ip
 ```bash
 curl -sfL https://get.k3s.io | \
-K3S_URL=https://192.168.68.68:6443 \
+K3S_URL=https://<MASTER_NODE_IP>:6443 \
 K3S_TOKEN=K10e3422f288f8b068e3ca59b276248dc84909c793456f05bc12e3868a57d948264::server:5c329ba997039a888d3a961bd9623fbf \
-K3S_NODE_IP=192.168.68.69 \
+K3S_NODE_IP=<WORKER_NODE_IP> \
 K3S_NODE_NAME=k3s-worker-1 \
 sh -
 ```
