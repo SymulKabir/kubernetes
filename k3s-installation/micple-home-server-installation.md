@@ -82,6 +82,38 @@ kubectl scale deployment ingress-nginx-controller -n ingress-nginx --replicas=0
 kubectl scale deployment ingress-nginx-controller -n ingress-nginx --replicas=1
 ```
 
+#### Configure MetalLB for LoadBalancer IP
+Install MetalLB
+```bash
+kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.14.9/config/manifests/metallb-native.yaml
+```
+Create IP Address Pool & L2 Advertisement
+```bash
+cat <<EOF | kubectl apply -f -
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: my-ip-pool
+  namespace: metallb-system
+spec:
+  addresses:
+  - 192.168.1.240-192.168.1.250
+---
+apiVersion: metallb.io/v1beta1
+kind: L2Advertisement
+metadata:
+  name: l2-advert
+  namespace: metallb-system
+spec:
+  ipAddressPools:
+  - my-ip-pool
+EOF
+```
+make sure the MetalLB pods are Running:
+```bash
+kubectl get pods -n metallb-system
+```
+
 #### Create Ingress Resource file
 ```bash
 nano ingress.yaml
