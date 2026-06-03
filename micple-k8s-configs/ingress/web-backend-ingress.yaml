@@ -14,6 +14,7 @@ spec:
     - afflat3d4.com
     - afflat3d5.com
     - backend.cloud.micple.com
+    - backend.auth.micple.com
     secretName: web-backend-tls
 
   rules:
@@ -62,3 +63,13 @@ spec:
               number: 80
 
 
+  - host: backend.auth.micple.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: web-backend-auth-service
+            port:
+              number: 80

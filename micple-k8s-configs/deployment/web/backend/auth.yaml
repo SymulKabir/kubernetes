@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-backend-auth
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web-backend-auth
+  template:
+    metadata:
+      labels:
+        app: web-backend-auth
+    spec:
+      containers:
+        - name: web-backend-auth
+          image: saimonpranta/auth:latest
+          imagePullPolicy: Always
+          env:
+            - name: VECTOR_DATABASE_URI
+              value: "http://qdrant-service:6333"
+          ports:
+            - containerPort: 2200
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: web-backend-auth-service
+spec:
+  selector:
+    app: web-backend-auth
+  ports:
+    - name: tcp-http
+      protocol: TCP
+      port: 80
+      targetPort: 2200
+
+    - name: udp-http
+      protocol: UDP
+      port: 80
+      targetPort: 2200
+  type: ClusterIP
