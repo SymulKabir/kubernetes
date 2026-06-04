@@ -162,6 +162,11 @@ kubectl apply -f cluster-issuer.yaml
 ```
 #### Verify ClusterIssuer
 ```bash
+kubectl get clusterissuer
+```
+
+You will get like this output:
+```bash
 root@micple:/var/k8s/web# kubectl get clusterissuer
 NAME               READY   AGE
 letsencrypt-prod   True    6s
