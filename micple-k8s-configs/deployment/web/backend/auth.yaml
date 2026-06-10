@@ -1,3 +1,30 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: insightface-pv
+spec:
+  capacity:
+    storage: 2Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: manual
+  hostPath:
+    path: /mnt/data/insightface-models
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: insightface-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: manual
+  resources:
+    requests:
+      storage: 2Gi
+  volumeName: insightface-pv
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -16,13 +43,23 @@ spec:
         - name: web-backend-auth
           image: saimonpranta/auth:latest
           imagePullPolicy: Always
+
           env:
             - name: VECTOR_DATABASE_URI
               value: "http://qdrant-service:6333"
+
           ports:
             - containerPort: 2200
----
 
+          volumeMounts:
+            - name: insightface-models
+              mountPath: /root/.insightface/models
+
+      volumes:
+        - name: insightface-models
+          persistentVolumeClaim:
+            claimName: insightface-pvc
+---
 apiVersion: v1
 kind: Service
 metadata:
@@ -30,14 +67,8 @@ metadata:
 spec:
   selector:
     app: web-backend-auth
-  ports:
-    - name: tcp-http
-      protocol: TCP
-      port: 80
-      targetPort: 2200
-
-    - name: udp-http
-      protocol: UDP
-      port: 80
-      targetPort: 2200
   type: ClusterIP
+  ports:
+    - name: http
+      port: 80
+      targetPort: 2200
