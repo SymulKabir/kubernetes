@@ -115,6 +115,17 @@ make sure the MetalLB pods are Running:
 kubectl get pods -n metallb-system
 ```
 
+
+#### Install Cert-Manager (for HTTPS)
+```bash
+kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.14.4/cert-manager.yaml
+```
+
+#### Verify Cert-Manager Installation
+
+```bash
+kubectl get pods --namespace cert-manager
+```
 #### Create Ingress Resource file
 ```bash
 nano ingress.yaml
@@ -162,17 +173,6 @@ You will get like this output:
 root@micple:/var/k8s/web# kubectl get ingress
 NAME               CLASS   HOSTS        ADDRESS   PORTS   AGE
 micple-ingress     nginx   micple.com             80      15h
-```
-
-#### Install Cert-Manager (for HTTPS)
-```bash
-kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.14.4/cert-manager.yaml
-```
-
-#### Verify Cert-Manager Installation
-
-```bash
-kubectl get pods --namespace cert-manager
 ```
 
 #### Apply ClusterIssuer
