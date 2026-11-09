@@ -1,0 +1,80 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: panel-profile
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: panel-profile
+  template:
+    metadata:
+      labels:
+        app: panel-profile
+    spec:
+      containers:
+      - name: panel-profile
+        image: saimonpranta/panel-49-profile:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3144
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: panel-profile-service
+spec:
+  selector:
+    app: panel-profile
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3144
+  type: ClusterIP
+root@k3s-worker-2:/var/k8s/deployment/panel/frontend# ^C
+root@k3s-worker-2:/var/k8s/deployment/panel/frontend# ^C
+root@k3s-worker-2:/var/k8s/deployment/panel/frontend# nano 49-profile.yaml 
+root@k3s-worker-2:/var/k8s/deployment/panel/frontend# kubectl delete -f 49-profile.yaml && kubectl apply -f 49-profile.yaml 
+deployment.apps "panel-profile" deleted from default namespace
+service "panel-profile-service" deleted from default namespace
+deployment.apps/panel-profile created
+service/panel-profile-service created
+root@k3s-worker-2:/var/k8s/deployment/panel/frontend# ls
+0-home.yaml      31-store.yaml      38-investments.yaml  44-futures.yaml       49-profile.yaml
+2-acptd.yaml     32-campaign.yaml   40-management.yaml   45-shortener.yaml     6-user.yaml
+2-notice.yaml    34-locker.yaml     41-jobs.yaml         46-laboratories.yaml  7-rates.yaml
+25-balance.yaml  37-assistant.yaml  43-watch.yaml        48-donations.yaml     8-ads.yaml
+root@k3s-worker-2:/var/k8s/deployment/panel/frontend# cat 49-profile.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: panel-profile
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: panel-profile
+  template:
+    metadata:
+      labels:
+        app: panel-profile
+    spec:
+      containers:
+      - name: panel-profile
+        image: saimonpranta/panel-49-profile:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3144
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: panel-profile-service
+spec:
+  selector:
+    app: panel-profile
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3149
+  type: ClusterIP
