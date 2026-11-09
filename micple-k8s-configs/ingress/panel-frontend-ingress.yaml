@@ -29,6 +29,7 @@ spec:
     - plmqazoknwsxijbedcuhvrfygt.assistants.micple.com
     - plmqazoknwsxijbedcuhvrfygt.investment.micple.com
     - plmqazoknwsxijbedcuhvrfygt.labratories.micple.com
+    - plmqazoknwsxijbedcuhvrfygt.profile.micple.com
     secretName: panel-frontend-tls
   rules:
   - host: plmqazoknwsxijbedcuhvrfygt.micple.com
@@ -219,5 +220,15 @@ spec:
         backend:
           service:
             name: panel-laboratories-service
+            port:
+              number: 80
+  - host: plmqazoknwsxijbedcuhvrfygt.profile.micple.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: panel-profile-service
             port:
               number: 80
