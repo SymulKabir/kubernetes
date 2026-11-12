@@ -13,18 +13,21 @@ spec:
         app: mongodb
     spec:
       containers:
-        - name: mongodb
-          image: mongo:7.0
-          volumeMounts:
-            - mountPath: /data/db
-              name: mongo-vol
+      - name: mongodb
+        image: mongo:7.0
+        args:
+          - "--replSet"
+          - "rs0"
+        ports:
+        - containerPort: 27017
+        volumeMounts:
+        - mountPath: /data/db
+          name: mongo-vol
       volumes:
-        - name: mongo-vol
-          persistentVolumeClaim:
-            claimName: mongo-pvc
-    
+      - name: mongo-vol
+        persistentVolumeClaim:
+          claimName: mongo-pvc
 ---
-
 apiVersion: v1
 kind: Service
 metadata:
@@ -33,6 +36,5 @@ spec:
   selector:
     app: mongodb
   ports:
-    - name: tcp
-      port: 27017
+    - port: 27017
       targetPort: 27017
